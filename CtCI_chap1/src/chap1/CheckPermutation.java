@@ -1,4 +1,4 @@
-package Questions;
+package chap1;
 
 import java.util.Arrays;
 
