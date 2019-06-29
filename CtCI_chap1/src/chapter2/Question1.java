@@ -6,14 +6,14 @@ public class Question1 {
 
 	public static void main(String[] args) {
 		HKLinkedList ll1 = new HKLinkedList();
-		for (int i=0; i<7; i++) {
+		for (int i=0; i<8; i++) {
 			ll1.appendToTail(i%2);
 		}
 
 		ll1.printLinkedList();
 		System.out.println("===========");
 		Question1 Q1 = new Question1();
-		Q1.removedups(ll1);
+		Q1.removedupsnobuffer(ll1);
 		ll1.printLinkedList();
 		System.out.println("===========");
 		
@@ -25,13 +25,17 @@ public class Question1 {
 		
 		ll2.printLinkedList();
 		System.out.println("===========");
-		Q1.removedups(ll2);
+		Q1.removedupsnobuffer(ll2);
 		ll2.printLinkedList();
 		System.out.println("===========");
+		
 
 	}
 	
 	public void removedups(HKLinkedList L) {
+		if (L.head.next == null) {
+			return;
+		}
 		HashSet<Integer> set = new HashSet<Integer>();
 		HKLinkedList.Node n = L.head;
 		set.add(n.data);
@@ -43,6 +47,29 @@ public class Question1 {
 				n = n.next;
 			}
 		}
+	}
+	
+	public void removedupsnobuffer(HKLinkedList L) {
+		if (L.head.next == null) {
+			return;
+		}
+		HKLinkedList.Node i = L.head;
+		HKLinkedList.Node j = L.head;
+		while (i != null) {
+			j = i;
+			while (j.next != null) {
+				if (i.data == j.next.data) {
+					j.next = j.next.next;
+				} else {
+					j = j.next;
+				}
+			}
+			//System.out.println("--debug--");
+			//L.printLinkedList();
+			//System.out.println("--debug--");
+			i = i.next;
+		}
+		
 	}
 
 }

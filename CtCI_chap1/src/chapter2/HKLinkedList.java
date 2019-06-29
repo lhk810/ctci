@@ -6,7 +6,7 @@ public class HKLinkedList {
 	
 	public void printLinkedList() {
 		Node n = head;
-		while (n.next != null) {
+		while (n != null) {
 			System.out.println(n.data);
 			n = n.next;
 		}
