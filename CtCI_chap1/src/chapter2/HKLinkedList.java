@@ -53,5 +53,9 @@ public class HKLinkedList {
 			data = d;
 		}
 		
+		public void  printNodedata() {
+			System.out.println("Node contains : " + data);
+		}
+		
 	}
 }
