@@ -35,4 +35,12 @@ public class HKStack<T> {
 	public boolean isEmpty() {
 		return top == null;
 	}
+	
+	public void printStack() {
+		StackNode<T> node = top;
+		while (node != null) {
+			System.out.println(node.data);
+			node = node.next;
+		}
+	}
 }
