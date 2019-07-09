@@ -1,6 +1,8 @@
 package chapter4;
 
+import java.util.ArrayList;
+
 public class HKNode {
 	public String name;
-	public HKNode[] children;
+	public ArrayList<HKNode> children;
 }
