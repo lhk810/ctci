@@ -39,13 +39,11 @@ public class Question3 {
 			if (list.size() == level) {
 				list.add(new HKLinkedList());
 				list.get(level).appendToTail(n.data);
-				listofdepths(n.left, list, level+1);
-				listofdepths(n.right, list, level+1);
 			} else {
 				list.get(level).appendToTail(n.data);
-				listofdepths(n.left, list, level+1);
-				listofdepths(n.right, list, level+1);
 			}
+			listofdepths(n.left, list, level+1);
+			listofdepths(n.right, list, level+1);
 		}
 		
 		return list;
