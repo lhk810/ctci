@@ -35,7 +35,7 @@ public class Question5 {
 			return false;
 		}
 		
-		if (!checkBST(n.left,min, n.data) || !checkBST(n.right,n.data,max)) {
+		if (!checkBST(n.left, min, n.data) || !checkBST(n.right,n.data,max)) {
 			return false;
 		}
 		
