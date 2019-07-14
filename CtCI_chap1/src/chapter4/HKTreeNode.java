@@ -10,5 +10,15 @@ public class HKTreeNode {
 	public HKTreeNode(int data) {
 		this.data = data;
 	}
+	
+	public void setLeft(HKTreeNode n) {
+		this.left = n;
+		this.left.parent = this;
+	}
+	
+	public void setRight(HKTreeNode n) {
+		this.right = n;
+		this.right.parent = this;
+	}
 
 }
