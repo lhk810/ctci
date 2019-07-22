@@ -48,9 +48,11 @@ public class Question9 {
 	
 	public void makelist(HKTreeNode root, ArrayList<ArrayList<Integer>> list, ArrayList<Integer> sublist) {
 		
+		/*
 		if (root.left == null && root.right == null) {
 			return;
 		}
+		*/
 		
 		/*
 		if (root.right == null && root.left != null) {
