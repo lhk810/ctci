@@ -1,19 +1,20 @@
 package chapter4;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Question9 {
 
 	public static void main(String[] args) {
 		Question2 q2 = new Question2();
-		int[] arr = new int[7];
+		int[] arr = new int[5];
 		arr[0] = 1;
 		arr[1] = 2;
 		arr[2] = 3;
 		arr[3] = 7;
 		arr[4] = 11;
-		arr[5] = 13;
-		arr[6] = 15;
+		//arr[5] = 13;
+		//arr[6] = 15;
 		//arr[7] = 18;
 		//arr[8] = 22;
 		HKTreeNode n = q2.makeTree(arr, 0, arr.length-1);
@@ -24,13 +25,21 @@ public class Question9 {
 		Question9 q9 = new Question9();
 		ArrayList<ArrayList<Integer>> list = q9.listofarray(tree.root);
 		
+		/*
 		for (int i=0; i<list.size(); i++) {
 			for (int j=0; j<list.get(i).size(); j++) {
 				System.out.print(list.get(i).get(j) + " ");
 			}
 			System.out.println();
 		}
-		
+		*/
+		ArrayList<LinkedList<Integer>> res = q9.allSequences(tree.root);
+		for (int i=0; i<res.size(); i++) {
+			for (int j=0; j<res.get(i).size(); j++) {
+				System.out.print(res.get(i).get(j) + " ");
+			}
+			System.out.println();
+		}
 		
 	}
 	
@@ -120,5 +129,55 @@ public class Question9 {
 	}
 	
 	
+	//solution below here
+	ArrayList<LinkedList<Integer>> allSequences(HKTreeNode node) {
+		ArrayList<LinkedList<Integer>> result = new ArrayList<LinkedList<Integer>>();
+		
+		if (node == null) {
+			result.add(new LinkedList<Integer>());
+			return result;
+		}
+		
+		LinkedList<Integer> prefix = new LinkedList<Integer>();
+		prefix.add(node.data);
+		
+		ArrayList<LinkedList<Integer>> leftSeq = allSequences(node.left);
+		ArrayList<LinkedList<Integer>> rightSeq = allSequences(node.right);
+		
+		for (LinkedList<Integer> left : leftSeq) {
+			for (LinkedList<Integer> right : rightSeq) {
+				ArrayList<LinkedList<Integer>> weaved = new ArrayList<LinkedList<Integer>>();
+				weaveLists(left, right, weaved, prefix);
+				result.addAll(weaved);
+			}
+		}
+		return result;
+
+		
+	}
+	
+	public void weaveLists(LinkedList<Integer> first, LinkedList<Integer> second,
+			ArrayList<LinkedList<Integer>> results, LinkedList<Integer> prefix) {
+		if (first.size() == 0 || second.size() == 0) {
+			LinkedList<Integer> result = (LinkedList<Integer>) prefix.clone();
+			result.addAll(first);
+			result.addAll(second);
+			results.add(result);
+			return;
+		}
+		
+		int headFirst = first.removeFirst();
+		prefix.addLast(headFirst);
+		weaveLists(first, second, results, prefix);
+		prefix.removeLast();
+		first.addFirst(headFirst);
+		
+		int headSecond = second.removeFirst();
+		prefix.addLast(headSecond);
+		weaveLists(first, second, results, prefix);
+		prefix.removeLast();
+		second.addFirst(headSecond);
+	}
+
 
 }
