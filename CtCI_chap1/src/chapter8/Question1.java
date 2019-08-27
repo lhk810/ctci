@@ -4,23 +4,25 @@ public class Question1 {
 
 	public static void main(String[] args) {
 		Question1 q1 = new Question1();
-		System.out.println(q1.countStep(4));
+		System.out.println(q1.countStep(5));
 
 	}
 	
 	public int countStep(int remainder) {
-		return countStep(remainder, 1, 0) + countStep(remainder, 2, 0) + countStep(remainder, 3, 0);
+		return countStep(remainder, 1) + countStep(remainder, 2) + countStep(remainder, 3);
 	}
 	
-	public int countStep(int remainder, int step, int count) {
+	public int countStep(int remainder, int step) {
 		int current = remainder - step;
 		if (current == 0) {
-			return ++count;
+			return 1;
 		} else if (current < 0) {
-			return count;
+			return 0;
 		} else {
-			return countStep(current, 1, 0) + countStep(current, 2, 0) + countStep(current, 3, 0);
+			return countStep(current, 1) + countStep(current, 2) + countStep(current, 3);
 		}
 	}
+	
+	//dynamic programming도 생각할 수 있어야 함
 
 }
