@@ -22,6 +22,7 @@ public class Question4 {
 		int target = (from + to)/2; //set은 순서가 유지되지 않는다. 어떻게하냐 이거
 		
 		
+		
 	}
 
 }
