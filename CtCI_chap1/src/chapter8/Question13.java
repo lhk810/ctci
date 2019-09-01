@@ -1,5 +1,9 @@
 package chapter8;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class Question13 {
 
 	public static void main(String[] args) {
@@ -8,15 +12,17 @@ public class Question13 {
 		Box box2 = new Box(2, 2, 2);
 		Box box3 = new Box(3, 3, 3);
 		
-		Box[] boxes = new Box[3];
-		boxes[0] = box1;
-		boxes[1] = box2;
-		boxes[2] = box3;
+		ArrayList<Box> boxes = new ArrayList<>();
+		boxes.add(box1);
+		boxes.add(box2);
+		boxes.add(box3);
 		
-		System.out.println(q13.boxStack(boxes));
+		System.out.println(q13.createStack(boxes));
 
 	}
 	
+	
+	/* 못풀겠어
 	public int boxStack(Box[] boxes) {
 		Box[] stack = new Box[boxes.length];
 		return boxStack(stack, boxes, 0, 0, null);
@@ -39,7 +45,13 @@ public class Question13 {
 					newboxes[j] = boxes[j];
 				}
 				newboxes[i] = null;
-				res = boxStack(stack, newboxes, size, height + boxlast.height, boxlast); //boxlast가 잘못됨 ㅠ
+				for (int j=0; j<newboxes.length; j++) {
+					if (newboxes[j] != null) {
+						boxlast = newboxes[j];
+						res = Math.max(height, boxStack(stack, newboxes, size, height + boxlast.height, boxlast)); //boxlast가 잘못됨 ㅠ
+					}
+				}
+				
 
 			}
 		}
@@ -50,7 +62,7 @@ public class Question13 {
 			if (checkSize(boxlast, box)) {
 				stack[size] = box;
 				size++;
-				height += box.height;
+				//height += box.height;
 				for (int i=0; i<boxes.length; i++) {
 					if (boxes[i] != null) {
 						boxlast = boxes[i];
@@ -59,14 +71,15 @@ public class Question13 {
 							newboxes[j] = boxes[j];
 						}
 						newboxes[i] = null;
-						res = boxStack(stack, newboxes, size, height, boxlast);
+						res = Math.max(height, boxStack(stack, newboxes, size, height + box.height, boxlast));
 					}
 				}
 			}
 		}
 			
-		return Math.max(height, res);
+		return Math.max(res, height);
 	}
+	*/
 	
 	public boolean checkSize(Box boxlast, Box box) {
 		if (boxlast.depth>box.depth && boxlast.height>box.height && boxlast.width>box.width) {
@@ -75,7 +88,45 @@ public class Question13 {
 			return false;
 		}
 	}
+	
+	//**********************************************************//
+	public int createStack(ArrayList<Box> boxes) {
+		Collections.sort(boxes, new BoxComparator());
+		int maxHeight = 0;
+		int[] stackMap = new int[boxes.size()];
+		for (int i= 0; i < boxes.size(); i++) {
+			int height = createStack(boxes, i, stackMap);
+			maxHeight = Math.max(maxHeight, height);
+		}
+		return maxHeight;
+	}
+	
+	public int createStack(ArrayList<Box> boxes, int idx, int[] stackMap) {
+		if (idx < boxes.size() && stackMap[idx] > 0) {
+			return stackMap[idx];
+		}
+		
+		Box bottom = boxes.get(idx);
+		int maxHeight = 0;
+		for (int i=0; i<boxes.size(); i++) {
+			if (boxes.get(i).checkSize(bottom)) {
+				int height = createStack(boxes, i, stackMap);
+				maxHeight = Math.max(maxHeight, height);
+			}
+		}
+		maxHeight += bottom.height;
+		stackMap[idx] = maxHeight;
+		return maxHeight;
+	}
+	
 
+}
+
+class BoxComparator implements Comparator<Box> {
+	@Override
+	public int compare(Box x, Box y) {
+		return y.height - x.height;
+	}
 }
 
 class Box {
@@ -86,5 +137,12 @@ class Box {
 		this.depth = d;
 		this.height = h;
 		this.width = w;
+	}
+	public boolean checkSize(Box box) {
+		if (this.depth<box.depth && this.height<box.height && this.width<box.width) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
