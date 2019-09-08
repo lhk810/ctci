@@ -8,19 +8,17 @@ public class Question12 {
 		Question12 q12 = new Question12();
 		ArrayList<int[][]> res = q12.eightQueens();
 		q12.printBoard(res.get(0));
+		System.out.println();
+		System.out.println(res.size());
 
 	}
 
 	public ArrayList<int[][]> eightQueens() {
 		ArrayList<int[][]> list = new ArrayList<int[][]>();
 		int[][] board = new int[8][8];
-		for (int r=0; r<board.length; r++) {
-			for (int c=0; c<board.length; c++) {
-				if (checkSpot(r, c, board)) {
-					addQueen(r, c, board, list);
-				}
-			}
-		}
+		
+		addQueen(0, board, list);
+		
 		return list;
 	}
 	
@@ -32,7 +30,15 @@ public class Question12 {
 		}
 	}
 	
-	public int[][] addQueen(int r, int c, int[][] board, ArrayList<int[][]> list) {
+	public void addQueen(int r, int[][] board, ArrayList<int[][]> list) {
+		for (int j=0;j<board.length;j++) {
+			if (checkSpot(r, j, board)) {
+				addQueen(r, j, board, list);
+			}
+		}
+	}
+	
+	public void addQueen(int r, int c, int[][] board, ArrayList<int[][]> list) {
 		
 		int [][] newboard = new int[8][8];
 		for (int i=0; i<board.length; i++) {
@@ -42,10 +48,13 @@ public class Question12 {
 		}
 		newboard[r][c] = 2;
 		fillBoard(r, c, newboard);
+		
 		if (r==board.length-1) {
 			list.add(newboard);
+			return;
 		}
-		return newboard;
+		
+		addQueen(r+1, newboard, list);
 	}
 	
 	public void fillBoard(int r, int c, int[][] board) {
@@ -72,7 +81,7 @@ public class Question12 {
 		//up-right
 		r1 = r;
 		c1 = c;
-		while (r1>0 && c1<board.length) {
+		while (r1>0 && c1<board.length-1) {
 			r1--;
 			c1++;
 			if (board[r1][c1] == 0) {
@@ -82,7 +91,7 @@ public class Question12 {
 		//down-left
 		r1=r;
 		c1=c;
-		while (r1<board.length && c1>0) {
+		while (r1<board.length-1 && c1>0) {
 			r1++;
 			c1--;
 			if (board[r1][c1] == 0) {
@@ -92,7 +101,7 @@ public class Question12 {
 		//down-right
 		r1=r;
 		c1=c;
-		while (r1<board.length && c1<board.length) {
+		while (r1<board.length-1 && c1<board.length-1) {
 			r1++;
 			c1++;
 			if (board[r1][c1] == 0) {
