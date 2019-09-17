@@ -53,7 +53,6 @@ public class Question4 {
 	public ArrayList<ArrayList<Integer>> makeSubsets(ArrayList<ArrayList<Integer>> wholeList, ArrayList<Integer> setToArrayList, int idx) {
 		
 		if (setToArrayList.size() == idx) {
-			//∫Û∞≈√ﬂ∞°?
 			return wholeList;
 		}
 		
