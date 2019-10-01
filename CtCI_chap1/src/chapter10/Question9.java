@@ -1,5 +1,8 @@
 package chapter10;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 //다시 하기
 public class Question9 {
 
@@ -23,56 +26,40 @@ public class Question9 {
 		array[3][3] = 120;
 		
 		Question9 q9 = new Question9();
-		int[] res = q9.searchMatrix(array, 80);
-		System.out.println("r : " + res[0] + ", c : " + res[1]);
+		HashMap<Integer, Integer> map = q9.searchMatrix(array, 95);
+		for (int key : map.keySet()) {
+			System.out.println("r: " + key + ", c: " + map.get(key));
+		}
+		
 
 	}
 	
-	public int[] searchMatrix(int[][] array, int target) {
-		int[] res = new int[2];
-		int r = rowSearch(array, target, 0, array.length-1);
-		int c = columnSearch(array, target, r, 0, array[0].length-1);
+	public HashMap<Integer, Integer> searchMatrix(int[][] array, int target) {
+		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+		search(array, target, map);
 		
-		if (c == -1) {
-			res[0] = -1;
-			res[1] = -1;
-			return res;
-		} else {
-			res[0] = r;
-			res[1] = c;
-			return res;
-		}
-		
+		return map;
 	}
 	
-	private int rowSearch(int[][] array, int target, int low, int high) {
-		int mid = (low + high);
-		if (low < high) {
-			return mid;
+	private void search(int[][] array, int target, HashMap<Integer, Integer> map) {
+		for (int i=0; i<array.length; i++) {
+			columnSearch(array, target, i, 0, array[i].length-1, map);
 		}
-		
-		if (array[mid][0] == target) {
-			return mid;
-		} else if (array[mid][0] > target) {
-			return rowSearch(array, target, mid+1, high);
-		} else {
-			return rowSearch(array, target, low, mid-1);
-		}
-		
 	}
 	
-	private int columnSearch(int[][] array, int target, int r, int low, int high) {
-		int mid = (low + high);
-		if (low < high) {
-			return -1;
+	private void columnSearch(int[][] array, int target, int r, int low, int high, HashMap<Integer, Integer> map) {
+		int mid = (low + high)/2;
+		if (low > high) {
+			return;
 		}
 		
 		if (array[r][mid] == target) {
-			return mid;
-		} else if (array[r][mid] > target) {
-			return rowSearch(array, target, mid+1, high);
+			map.put(r, mid);
+			return;
+		} else if (array[r][mid] < target) {
+			columnSearch(array, target, r, mid+1, high, map);
 		} else {
-			return rowSearch(array, target, low, mid-1);
+			columnSearch(array, target, r, low, mid-1, map);
 		}
 	}
 
