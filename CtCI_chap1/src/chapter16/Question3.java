@@ -3,13 +3,23 @@ package chapter16;
 public class Question3 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		Point p1 = new Point(10.0, 0.0);
+		Point p2 = new Point(0.0, 10.0);
+		Point p3 = new Point(0.0, 0.0);
+		Point p4 = new Point(10.0, 10.0);
+		Line l1 = new Line(p1, p2);
+		Line l2 = new Line(p3, p4);
+		
+		Question3 q3 = new Question3();
+		Point intersection = q3.findIntersection(l1, l2);
+		System.out.println("x : "+intersection.x);
+		System.out.println("y : "+intersection.y);
 
 	}
 	
 	public Point findIntersection(Line l1, Line l2) {
-		double slope1 = Math.abs( (l1.end.y - l1.start.y)/(l1.end.x - l1.start.x) );
-		double slope2 = Math.abs( (l2.end.y - l2.start.y)/(l2.end.x - l2.start.x) );
+		double slope1 = ( (l1.end.y - l1.start.y)/(l1.end.x - l1.start.x) );
+		double slope2 = ( (l2.end.y - l2.start.y)/(l2.end.x - l2.start.x) );
 		
 		if (slope1 != slope2) {
 			//assume l1 & l2 have infinite length
