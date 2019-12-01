@@ -6,7 +6,7 @@ public class Question7 {
 		
 		Question7 q7 = new Question7();
 		
-		int a = 1;
+		int a = 11;
 		int b = 5;
 		
 		System.out.println(q7.getMax(a, b));
@@ -14,14 +14,14 @@ public class Question7 {
 	}
 
 	/*
-	 * ((a-b)/(a-b))*(a-b) + (a+b) = ?
+	 * (|a-b|/(a-b))*(a-b) + (a+b) = ?
 	 * a<b : 2b
 	 * a>b : 2a
-	 * 
+	 * a==b Ã³¸® ¿ä¸Á
 	 */
 	
 	public int getMax(int a, int b) {
-		return ( ((a-b)/(a-b))*(a-b) + (a+b) ) / 2;
+		return ( (Math.abs(a-b)/(a-b))*(a-b) + (a+b) ) / 2;
 	}
-
+	
 }
